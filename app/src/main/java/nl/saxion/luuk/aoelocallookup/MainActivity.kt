@@ -33,6 +33,9 @@ class MainActivity : ComponentActivity() {
                     composable("new_screen") {
                         NewScreen() // New screen composable to navigate to
                     }
+                    composable("selector_screen_example"){
+                        SelectorExampleScreen() // new example scree
+                    }
                 }
             }
         }
@@ -59,6 +62,16 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier
             ) {
                 Text(text = "Go to New Screen")
+            }
+
+            Button(
+                onClick = {
+                    // Navigate to the new screen when the button is clicked
+                    navController.navigate("selector_screen_example")
+                },
+                modifier = Modifier
+            ) {
+                Text(text = "Go to Selector Example")
             }
         }
     }
