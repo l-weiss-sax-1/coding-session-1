@@ -36,6 +36,9 @@ class MainActivity : ComponentActivity() {
                     composable("selector_screen_example"){
                         SelectorExampleScreen() // new example scree
                     }
+                    composable("ClickableList") {
+                        ClickableList()
+                    }
                 }
             }
         }
@@ -72,6 +75,16 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier
             ) {
                 Text(text = "Go to Selector Example")
+            }
+
+            Button(
+                onClick = {
+                    // Navigate to the new screen when the button is clicked
+                    navController.navigate("ClickableList")
+                },
+                modifier = Modifier
+            ) {
+                Text(text = "Go to list")
             }
         }
     }
