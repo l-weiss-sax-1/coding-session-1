@@ -39,6 +39,9 @@ class MainActivity : ComponentActivity() {
                     composable("ClickableList") {
                         ClickableList()
                     }
+                    composable("ListNavigation") {
+                        ListNavigationComponent()
+                    }
                 }
             }
         }
@@ -85,6 +88,16 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier
             ) {
                 Text(text = "Go to list")
+            }
+
+            Button(
+                onClick = {
+                    // Navigate to the new screen when the button is clicked
+                    navController.navigate("ListNavigation")
+                },
+                modifier = Modifier
+            ) {
+                Text(text = "Go to list 2")
             }
         }
     }
