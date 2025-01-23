@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import nl.saxion.luuk.aoelocallookup.infrastructure.api
+import nl.saxion.luuk.aoelocallookup.infrastructure.DAO.Civilization
 
 
 @Composable
@@ -36,53 +39,66 @@ fun ClickableList(navController: NavController? = null) {
 
 @Composable
 fun myList() {
+    // Fetch civilizations data asynchronously
+    val api = api()
+    val civilizations = remember { mutableStateOf<List<Civilization>?>(null) }
 
-    // List of countries with additional data
-    val countryData = listOf(
-        "Canada" to "Population: 38M\nCapital: Ottawa",
-        "China" to "Population: 1.4B\nCapital: Beijing",
-        "USA" to "Population: 331M\nCapital: Washington, D.C.",
-        "Pakistan" to "Population: 220M\nCapital: Islamabad"
-    )
+    // Fetch data in a LaunchedEffect
+    LaunchedEffect(Unit) {
+        api.fetchCivilizations { civs ->
+            civilizations.value = civs
+        }
+    }
 
     // State to track expanded items
     var expandedItems by remember { mutableStateOf(setOf<Int>()) }
 
-    LazyColumn(
-        Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-    ) {
-        items(countryData.size) { index ->
+    // Check if civilizations are loaded
+    if (civilizations.value == null) {
+        // Display loading text while fetching data
+        Text(text = "Loading...", modifier = Modifier.fillMaxWidth().padding(16.dp))
+    } else {
+        // If civilizations data is available, display them in a LazyColumn
+        LazyColumn(
+            Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        ) {
+            // Loop through civilizations list
+            civilizations.value?.let { civList ->
+                items(civList.size) { index ->
 
-            ElevatedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp)
-                    .clickable {
-                        expandedItems = if (expandedItems.contains(index)) {
-                            expandedItems - index
-                        } else {
-                            expandedItems + index
+                    ElevatedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 10.dp)
+                            .clickable {
+                                expandedItems = if (expandedItems.contains(index)) {
+                                    expandedItems - index
+                                } else {
+                                    expandedItems + index
+                                }
+                            },
+                        shape = CardDefaults.elevatedShape,
+                        colors = CardDefaults.elevatedCardColors(),
+                        elevation = CardDefaults.elevatedCardElevation()
+                    ) {
+                        // Display the civilization name
+                        Text(
+                            text = civList[index].civName,
+                            modifier = Modifier.padding(16.dp)
+                        )
+
+                        // If the item is expanded, show the units data
+                        if (expandedItems.contains(index)) {
+                            civList[index].units.forEach { unit ->
+                                Text(
+                                    text = "${unit.unitName} (Age ID: ${unit.ageId})",
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            }
                         }
-                    },
-                shape = CardDefaults.elevatedShape,
-                colors = CardDefaults.elevatedCardColors(),
-                elevation = CardDefaults.elevatedCardElevation()
-            ) {
-
-                // Display the country name
-                Text(
-                    text = countryData[index].first,
-                    modifier = Modifier.padding(16.dp)
-                )
-
-                // If the item is expanded, show additional data
-                if (expandedItems.contains(index)) {
-                    Text(
-                        text = countryData[index].second,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    }
                 }
             }
         }
