@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
-import nl.saxion.luuk.aoelocallookup.infrastructure.api
+import nl.saxion.luuk.aoelocallookup.infrastructure.Api
 import nl.saxion.luuk.aoelocallookup.infrastructure.DAO.Civilization
 
 
@@ -40,7 +39,7 @@ fun ClickableList(navController: NavController? = null) {
 @Composable
 fun myList() {
     // Fetch civilizations data asynchronously
-    val api = api()
+    val api = Api()
     val civilizations = remember { mutableStateOf<List<Civilization>?>(null) }
 
     // Fetch data in a LaunchedEffect
