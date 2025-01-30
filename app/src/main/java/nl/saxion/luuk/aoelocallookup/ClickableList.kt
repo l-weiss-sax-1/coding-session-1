@@ -39,12 +39,11 @@ fun ClickableList(navController: NavController? = null) {
 @Composable
 fun myList() {
     // Fetch civilizations data asynchronously
-    val api = Api()
     val civilizations = remember { mutableStateOf<List<Civilization>?>(null) }
 
     // Fetch data in a LaunchedEffect
     LaunchedEffect(Unit) {
-        api.fetchCivilizations { civs ->
+        Api.fetchCivilizations { civs ->
             civilizations.value = civs
         }
     }

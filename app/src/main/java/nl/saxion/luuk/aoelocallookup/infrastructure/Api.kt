@@ -11,8 +11,10 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-class Api {
+object Api{
     private val client = OkHttpClient()
+
+    private var civs: List<Civilization>? = null
 
     // Generic post function that works with any type T and parses the response into that type
     private inline fun <reified T> post(url: String, crossinline callback: (T?) -> Unit, crossinline parser: (String) -> T) {
@@ -54,13 +56,20 @@ class Api {
 
     // Example of how to call the post function with a specific type and a parser function
     fun fetchCivilizations(callback: (List<Civilization>?) -> Unit) {
-        post("https://aoe2-data-api.herokuapp.com/civs?includeUnits=true&includeTechs=true&includeBuildings=true", callback) { responseBody ->
-            parseCivData(responseBody)
+        if (civs.isNullOrEmpty()) {
+            post("https://aoe2-data-api.herokuapp.com/civs?includeUnits=true&includeTechs=true&includeBuildings=true", callback) { responseBody ->
+                parseCivData(responseBody)
+            }
+        }
+        else {
+            return callback(civs)
         }
     }
 
     private fun parseCivData(jsonString: String): List<Civilization> {
-        return Json { ignoreUnknownKeys = true }.decodeFromString(jsonString)
+        val result: List<Civilization> = Json { ignoreUnknownKeys = true }.decodeFromString(jsonString)
+        this.civs = result
+        return result
     }
 
     private fun parseAgesData(jsonString: String): List<Age> {
