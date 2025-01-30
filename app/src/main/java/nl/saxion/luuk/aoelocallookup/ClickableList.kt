@@ -6,11 +6,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -55,7 +61,34 @@ fun myList() {
     // Check if civilizations are loaded
     if (civilizations.value == null) {
         // Display loading text while fetching data
-        Text(text = "Loading...", modifier = Modifier.fillMaxWidth().padding(16.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            // Background Image
+            Image(
+                painter = painterResource(id = R.drawable.background), // Uses background.png
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            // Gray Overlay (50% transparency)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.6f))
+            )
+
+            // Centered Logo
+            Image(
+                painter = painterResource(id = R.drawable.logo), // Uses logo.png
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(200.dp) // Adjust the size if needed
+                    .align(Alignment.Center)
+            )
+        }
     } else {
         // If civilizations data is available, display them in a LazyColumn
         LazyColumn(
