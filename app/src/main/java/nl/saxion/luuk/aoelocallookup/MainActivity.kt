@@ -4,15 +4,35 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import android.graphics.Color as AndroidColor
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
 import androidx.navigation.compose.NavHost
+import androidx.compose.foundation.layout.*
 import androidx.navigation.compose.rememberNavController
 import nl.saxion.luuk.aoelocallookup.ui.theme.AOELocalLookupTheme
 
@@ -50,52 +70,99 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        Column(
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .background(Color.Black.copy(alpha = 0.4f))
+        )
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Greeting(
-                name = "Luuk",
-                modifier = Modifier.padding(innerPadding)
-            )
+            Spacer(modifier = Modifier.height(100.dp))
+
             Button(
                 onClick = {
-                    // Navigate to the new screen when the button is clicked
                     navController.navigate("new_screen")
                 },
                 modifier = Modifier
+                    .width(300.dp)
+                    .height(60.dp)
+                    .padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(AndroidColor.parseColor("#303030")),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Text(text = "Go to New Screen")
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
+
             Button(
                 onClick = {
-                    // Navigate to the new screen when the button is clicked
                     navController.navigate("selector_screen_example")
                 },
                 modifier = Modifier
+                    .width(300.dp)
+                    .height(60.dp)
+                    .padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(AndroidColor.parseColor("#303030")),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Text(text = "Go to Selector Example")
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
+
             Button(
                 onClick = {
-                    // Navigate to the new screen when the button is clicked
                     navController.navigate("ClickableList")
                 },
                 modifier = Modifier
+                    .width(300.dp)
+                    .height(60.dp)
+                    .padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(AndroidColor.parseColor("#303030")),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Text(text = "Go to list")
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
+
             Button(
                 onClick = {
-                    // Navigate to the new screen when the button is clicked
                     navController.navigate("ListNavigation")
                 },
                 modifier = Modifier
+                    .width(300.dp)
+                    .height(60.dp)
+                    .padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(AndroidColor.parseColor("#303030")),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Text(text = "Go to list 2")
             }
