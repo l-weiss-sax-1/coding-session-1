@@ -8,4 +8,5 @@ This app connects to an API and shows details of a very well known game.
 
 
 ## Authors:
-- Luuk Weiss
+- https://github.com/l-weiss-sax-1/ or https://github.com/wytzig
+- https://github.com/softwharee
