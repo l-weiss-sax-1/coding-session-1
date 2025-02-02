@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(navController) // Home screen composable
                     }
                     composable("new_screen") {
-                        NewScreen() // New screen composable to navigate to
+                        NewScreen()
                     }
                     composable("selector_screen_example"){
                         SelectorExampleScreen() // new example scree
