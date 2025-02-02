@@ -1,6 +1,10 @@
-### AOE lookup app
+## AOE lookup app
 
-This app connects to an API and shows details of a very well known game. 
+This app connects to an API and shows details of a very well known pc-game created by Microsoft.
+ 
+Honorably took inspiration from the many hours of watching (T90)[https://www.youtube.com/@T90Official]
+
+
 
 ### How to develop
 - install android studio
